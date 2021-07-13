@@ -6,7 +6,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 function Message(props) {
 
   return <div className={props.fromCurrentUser ? 'message message__right' : 'message message__left'}>
-    <p className="message_author">{props.fromCurrentUser ? 'Вы' : props.author}</p>
+    <p className="message_author">{props.fromCurrentUser ? 'Автор' : props.author}</p>
     <p className="message_item">{props.text}</p>
 
   </div>
