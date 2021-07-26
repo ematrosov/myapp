@@ -4,6 +4,7 @@ import { Box, FormControl, Grid, IconButton, makeStyles, Paper, Typography } fro
 import TextField from "@material-ui/core/TextField";
 import SendIcon from "@material-ui/icons/Send";
 
+
 const useStyles = makeStyles({
     root: {
         minWidth: "70%",
@@ -21,12 +22,11 @@ const useStyles = makeStyles({
         minWidth: "80%"
     }
 })
-
-export default function Chat() {
+export default function Chat(props) {
     const classes = useStyles();
     const [messageList, setMessageList] = useState([]);
     const [id, setId] = useState(1)
-    const [currentUser] = useState('Matrosov Egor')
+    const [currentUser] = useState('Egor Matrosov')
     const messageContainerRef = useRef(null);
     const inputRef = useRef(null);
     const [currentMessage, setCurrentMessage] = useState('')
@@ -37,34 +37,33 @@ export default function Chat() {
             author: author,
             text: text
         }
-
         setMessageList((prevMessageList) => {
             return prevMessageList.concat(msg);
         });
-
         setId((oldId) => oldId + 1);
     }, [id]);
 
-
     const robotAnswer = () => {
-        if (messageList.length > 0 && messageList[messageList.length - 1].author !== 'Bot') {
-            const robotMessage = 'Еще раз...'
-            setTimeout(() => addMessage(robotMessage, 'Bot'), 1500)
+        if (messageList.length > 0 && messageList[messageList.length - 1].author !== props.currentChat.name) {
+            const robotMessage = 'Еще'
+            setTimeout(() => addMessage(robotMessage, props.currentChat.name), 1500)
         }
     }
-
+    useEffect(() => {
+        return () => {
+            setMessageList([])
+        };
+    }, [props.currentChat.name]);
     const handleInputChange = (event) => {
         setCurrentMessage(event.target.value)
     }
-
     const handleSubmitForm = (event) => {
         event.preventDefault();
         addMessage(currentMessage, currentUser)
         setCurrentMessage('')
     }
 
-    useEffect(robotAnswer, [messageList, addMessage])
-
+    useEffect(robotAnswer, [messageList, addMessage, props.currentChat])
     useEffect(() => {
         messageContainerRef.current.scrollTop = messageContainerRef.current.scrollHeight;
         inputRef.current.focus()
@@ -72,9 +71,9 @@ export default function Chat() {
 
     return (
         <Paper className={classes.root}>
-            <Typography variant="h5" >
-                Чат
-            </Typography>
+            <Typography variant="h5" ></Typography>
+            {props.currentChat.name}
+
             <Box className={classes.chatContainer} ref={messageContainerRef}>
                 <Grid container direction="column" >
                     {
@@ -86,10 +85,9 @@ export default function Chat() {
                     }
                 </Grid>
             </Box>
-
             <form onSubmit={handleSubmitForm} >
                 <FormControl className={classes.input}>
-                    <TextField label="Сообщение"
+                    <TextField label="сообщение"
                         id='text-field'
                         multiline
                         rows={3}
