@@ -1,12 +1,11 @@
 import Message from "./message";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-//import { useCallback, useEffect, useRef, useState } from "react";
 import { Box, FormControl, Grid, IconButton, makeStyles, Paper, Typography } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import SendIcon from "@material-ui/icons/Send";
 import { useDispatch, useSelector } from "react-redux";
 import { getMessagesByChatId } from "../redux/messages/selectors";
-import { addMessageToStore } from "../redux/messages/messages-actions";
+import { addMessageWithThunk } from "../redux/messages/messages-actions";
 
 
 const useStyles = makeStyles({
@@ -49,17 +48,10 @@ export default function Chat(props) {
             text: text
 
         }
-        dispatch(addMessageToStore(msg))
+        dispatch(addMessageWithThun(msg))
     }, [props.currentChat, dispatch]);
 
-    const robotAnswer = () => {
-        //if (messageList.length > 0 && messageList[messageList.length - 1].author !== props.currentChat.name) {
-        console.log("botAnswer")
-        if (messageListFromStore.length > 0 && messageListFromStore[messageListFromStore.length - 1].currentUser) {
-            const robotMessage = 'Еще'
-            setTimeout(() => addMessage(robotMessage, false), 1500)
-        }
-    }
+
 
 
     const handleInputChange = (event) => {
@@ -72,7 +64,7 @@ export default function Chat(props) {
         setCurrentMessage('')
     }
 
-    useEffect(robotAnswer, [messageListFromStore, addMessage])
+
 
     useEffect(() => {
         messageContainerRef.current.scrollTop = messageContainerRef.current.scrollHeight;

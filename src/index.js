@@ -5,15 +5,17 @@ import { BrowserRouter } from "react-router-dom";
 import Router from "./router/router";
 import reportWebVitals from './reportWebVitals';
 import { Provider } from "react-redux";
-import { store } from "./redux/store";
+import { persistor, store } from "./redux/store";
+import { PersistGate } from "redux-persist/integration/react";
 
 ReactDOM.render(
   <React.StrictMode>
-
     <Provider store={store}>
-      <BrowserRouter>
-        <Router />
-      </BrowserRouter>
+      <PersistGate persistor={persistor} loading={<h6>Loading...</h6>}>
+        <BrowserRouter>
+          <Router />
+        </BrowserRouter>
+      </PersistGate>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')
