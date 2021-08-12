@@ -1,21 +1,17 @@
 import { ADD_CHAT, REMOVE_CHAT } from "./chats-actions";
 
-const initialState = [
-    { name: 'Robot', id: 1 },
-    { name: 'Vasya', id: 2 },
-    { name: 'Lesha', id: 3 },
-    { name: 'Petya', id: 4 }
-]
+const initialState = []
+
 
 export default function chatsReducer(state = initialState, action) {
     switch (action.type) {
         case ADD_CHAT: {
-            const newChat = {
-                name: action.payload.chatName,
-                id: +Date.now()
+            const index = state.findIndex(chat => chat.id === action.payload.chat.id)
+            if (index === -1) {
+                return [...state, action.payload.chat]
             }
 
-            return [...state, newChat]
+            return [...state]
         }
         case REMOVE_CHAT: {
             const index = state.findIndex(chat => chat.id === action.payload.chatId)

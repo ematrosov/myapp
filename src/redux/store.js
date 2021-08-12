@@ -10,7 +10,8 @@ import newsReducer from "./news/news-reducer";
 
 const persistConfig = {
     key: 'root',
-    storage
+    storage,
+    blacklist: ['chats', 'messages']
 }
 const rootReducer = combineReducers({
     profile: profileReducer,

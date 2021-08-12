@@ -7,12 +7,15 @@ import reportWebVitals from './reportWebVitals';
 import { Provider } from "react-redux";
 import { persistor, store } from "./redux/store";
 import { PersistGate } from "redux-persist/integration/react";
+import Header from "./components/header";
+import "./services/firebase";
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <PersistGate persistor={persistor} loading={<h6>Loading...</h6>}>
         <BrowserRouter>
+          <Header />
           <Router />
         </BrowserRouter>
       </PersistGate>
