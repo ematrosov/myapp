@@ -1,9 +1,9 @@
 import Chat from './components/chat'
 import ChatsList from "./components/chats-list";
 import { Box, createTheme, makeStyles, MuiThemeProvider } from "@material-ui/core";
-import Routes from './router/route';
 import { useParams } from "react-router";
 import { useState } from "react";
+
 
 const useStyles = makeStyles({
   App: {
