@@ -1,8 +1,10 @@
-import { CHANGE_NAME, CHANGE_STATUS } from "./profile-actions";
+import { CHANGE_NAME, CHANGE_STATUS, LOGIN, LOGOUT } from "./profile-actions";
 
 const initialState = {
     name: 'Egor',
-    status_hungry: false
+    status_hungry: false,
+    isAuthed: false
+
 }
 
 export default function profileReducer(state = initialState, action) {
@@ -17,6 +19,19 @@ export default function profileReducer(state = initialState, action) {
             return {
                 ...state,
                 name: action.payload.name
+            }
+        }
+
+        case LOGIN: {
+            return {
+                ...state,
+                isAuthed: true
+            }
+        }
+        case LOGOUT: {
+            return {
+                ...state,
+                isAuthed: false
             }
         }
         default:

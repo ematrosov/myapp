@@ -31,7 +31,7 @@ function App() {
   const currentChat = chatList.find((chat) => {
     // return chat.id === chatId ? true : false
 
-    return chat.id === +chatId
+    return chat.id === chatId
   })
   return (
     <MuiThemeProvider theme={darkTheme} >

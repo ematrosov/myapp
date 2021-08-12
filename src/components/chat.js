@@ -5,7 +5,7 @@ import TextField from "@material-ui/core/TextField";
 import SendIcon from "@material-ui/icons/Send";
 import { useDispatch, useSelector } from "react-redux";
 import { getMessagesByChatId } from "../redux/messages/selectors";
-import { addMessageWithThunk } from "../redux/messages/messages-actions";
+import { addMessageToDb, initMessageTracking } from "../redux/messages/messages-actions";
 
 
 const useStyles = makeStyles({
@@ -42,13 +42,15 @@ export default function Chat(props) {
     const addMessage = useCallback((text, currentUserFlag) => {
         const msg = {
 
-            id: +Date.now(),
-            chatId: +props.currentChat.id,
+            //id: +Date.now(),
+            //chatId: +props.currentChat.id,
             currentUser: currentUserFlag,
             text: text
 
         }
-        dispatch(addMessageWithThun(msg))
+        //dispatch(addMessageWithThun(msg))
+        dispatch(addMessageToDb(props.currentChat.id, msg))
+
     }, [props.currentChat, dispatch]);
 
 
@@ -72,6 +74,9 @@ export default function Chat(props) {
 
     }, [messageListFromStore])
 
+    useEffect(() => {
+        dispatch(initMessageTracking(props.currentChat.id))
+    }, [dispatch, props.currentChat.id])
 
     return (
         <Paper className={classes.root}>

@@ -15,8 +15,10 @@ import {
 import ImageIcon from '@material-ui/icons/Image';
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { addChat, removeChat } from "../redux/chats/chats-actions";
-import { useState } from "react";
+//import { addChat, removeChat } from "../redux/chats/chats-actions";
+//import { useState } from "react";
+import { addChatToDb, initChatsTracking, removeChatFromDb } from "../redux/chats/chats-actions";
+import { useEffect, useState } from "react";
 import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
 
@@ -42,12 +44,16 @@ export default function ChatsList(props) {
 
     const handleSubmitForm = (event) => {
         event.preventDefault()
-        dispatch(addChat(newChatName))
+        dispatch(addChatToDb(newChatName))
     }
 
     const handleDeleteButtonCLick = (chatId) => {
-        dispatch(removeChat(chatId))
+        dispatch(removeChatFromDb(chatId))
     }
+
+    useEffect(() => {
+        dispatch(initChatsTracking())
+    }, [dispatch])
 
 
     return (
@@ -73,7 +79,7 @@ export default function ChatsList(props) {
             {
                 chatList.map((chat) =>
                     <List key={chat.id}>
-                        <ListItem selected={+props.chatId === chat.id}>
+                        <ListItem selected={props.chatId === chat.id}>
                             <ListItemAvatar>
                                 <Avatar>
                                     <ImageIcon />
