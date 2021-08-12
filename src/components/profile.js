@@ -1,7 +1,7 @@
 import React from "react";
 import { Checkbox, Divider, FormControl, FormControlLabel, FormGroup, Paper, Typography } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
-import { changeName, changeStatus } from "../redux/profile-actions";
+import { changeName, changeStatus } from "../redux/profile/profile-actions";
 import TextField from "@material-ui/core/TextField";
 import { Link } from "react-router-dom";
 
